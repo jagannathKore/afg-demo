@@ -2,7 +2,7 @@
   "version": "draft",
   "state": "active",
   "environment": null,
-  "source_hash": "cb4d306da15256b0df24e02eb6dff4cafeab25b47441329e77a2c1224804eedf",
+  "source_hash": "bcf169e822ba2f5670accee5d242f244f6653fc7009edc373ffaba3a0c29270b",
   "changelog": null,
   "triggers": [
     {
@@ -42,6 +42,10 @@
             "output": {
               "expression": "{{context.steps.Tool0001.output}}",
               "type": "string"
+            },
+            "response": {
+              "expression": "{{context.response}}",
+              "type": "json"
             }
           }
         }
@@ -49,21 +53,21 @@
       {
         "id": "c6912b69-4303-4b4f-b26c-c3b884a56075",
         "nodeType": "tool",
-        "name": "Tool0001",
+        "name": "table_call_tool",
         "position": {
           "x": 119.93489583333334,
           "y": -62.08333841959634
         },
         "config": {
           "toolId": "019f36c5-59d4-7875-8143-fe6d3d3d9f7a",
-          "toolName": "table_tool",
+          "toolName": "contry_wise_data_tool",
           "toolType": "table",
           "params": {
             "op": "{{trigger.payload.op}}",
+            "query": "{{trigger.payload.query}}",
             "filters": "{{trigger.payload.filters}}",
-            "data": "{{trigger.payload.data}}",
-            "limit": "{{trigger.payload.limit}}",
-            "offset": "{{trigger.payload.offset}}"
+            "onKey": "{{trigger.payload.onKey}}",
+            "values": "{{trigger.payload.values}}"
           },
           "executionMode": "sync"
         }
@@ -77,7 +81,7 @@
           "y": -119.48798428392516
         },
         "config": {
-          "code": "const operation = trigger.payload.op;\nconst output = context.steps.Tool0001.output\nif(operation=='query'){\n\n}"
+          "code": "const output = context.steps.table_call_tool.output;\ncontext.response = JSON.parse(output);\nconst operation = context.trigger.payload.op;\nif(operation=='query'){\n  let rows = context.response?.data?.rows || [];\n  if(rows.length==1){\n    context.response = rows[0].values;\n  }\n  else{\n    context.response = rows;\n  }\n}"
         }
       }
     ],
@@ -108,7 +112,8 @@
       "properties": {
         "output": {
           "type": "string"
-        }
+        },
+        "response": {}
       }
     },
     "entryAgent": null,
