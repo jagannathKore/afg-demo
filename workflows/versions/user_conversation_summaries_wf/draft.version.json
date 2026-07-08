@@ -1,0 +1,215 @@
+{
+  "version": "draft",
+  "state": "active",
+  "environment": null,
+  "source_hash": "30edf70e6b943b5627a3c1d4d94543acd6109e8a26c38c4ad9a2c445d88f5ea4",
+  "changelog": null,
+  "triggers": [
+    {
+      "_exportedId": "019f3b65-743c-7524-b5ef-9d8c13733034",
+      "triggerName": "webhook",
+      "type": "webhook",
+      "config": {},
+      "environment": null
+    }
+  ],
+  "published_at": null,
+  "definition": {
+    "nodes": [
+      {
+        "id": "start-node",
+        "nodeType": "start",
+        "name": "Start",
+        "position": {
+          "x": 164.16666666666663,
+          "y": 16.66666666666667
+        },
+        "config": {
+          "inputVariables": []
+        }
+      },
+      {
+        "id": "291764c3-a679-4c27-b8d3-6fcf6d821a4c",
+        "nodeType": "tool",
+        "name": "Tool0001",
+        "position": {
+          "x": 335.83333333333337,
+          "y": 8.333328247070298
+        },
+        "config": {
+          "toolId": "019f3b64-209f-7fe6-bc48-1734f9d7e2aa",
+          "toolName": "user_conversation_summaries_tool",
+          "toolType": "table",
+          "params": {
+            "op": "{{trigger.payload.op}}",
+            "values": "{{trigger.payload.values}}",
+            "rows": "{{trigger.payload.rows}}",
+            "filters": "{{trigger.payload.filters}}",
+            "limit": "{{trigger.payload.limit}}",
+            "sort": "{{trigger.payload.sort}}",
+            "cursor": "{{trigger.payload.cursor}}",
+            "rowId": "{{trigger.payload.rowId}}",
+            "uniqueKey": "{{trigger.payload.uniqueKey}}",
+            "rowVersion": "{{trigger.payload.rowVersion}}"
+          },
+          "executionMode": "sync"
+        }
+      },
+      {
+        "id": "b477b652-dd69-4e83-a595-a619ccd7b92c",
+        "nodeType": "end",
+        "name": "End0001",
+        "position": {
+          "x": 621.6666666666667,
+          "y": 5.8333282470703125
+        },
+        "config": {
+          "outputMapping": {
+            "output": {
+              "expression": "{{context.steps.Tool0001.output}}",
+              "type": "string"
+            },
+            "latestSummary": {
+              "expression": "{{context.steps.ParseLatestSummary.output.latestSummary}}",
+              "type": "json"
+            },
+            "summary_text": {
+              "expression": "{{context.steps.ParseLatestSummary.output.summary_text}}",
+              "type": "string"
+            },
+            "summary_json": {
+              "expression": "{{context.steps.ParseLatestSummary.output.summary_json}}",
+              "type": "json"
+            },
+            "session_details": {
+              "expression": "{{context.steps.ParseLatestSummary.output.session_details}}",
+              "type": "json"
+            },
+            "session_end": {
+              "expression": "{{context.steps.ParseLatestSummary.output.session_end}}",
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "parse-latest-summary-node",
+        "nodeType": "function",
+        "name": "ParseLatestSummary",
+        "position": {
+          "x": 480,
+          "y": 8.333328247070298
+        },
+        "config": {
+          "code": "const raw = context.steps && context.steps.Tool0001 ? context.steps.Tool0001.output : null;\nlet tableResult = raw;\n\nif (typeof raw === \"string\") {\n  try {\n    tableResult = JSON.parse(raw);\n  } catch (error) {\n    tableResult = null;\n  }\n}\n\nconst data = tableResult && typeof tableResult === \"object\" && tableResult.data && typeof tableResult.data === \"object\"\n  ? tableResult.data\n  : {};\nconst rows = Array.isArray(data.rows) ? data.rows : [];\nconst row = rows.length > 0 && rows[0] && typeof rows[0] === \"object\" ? rows[0] : null;\nconst values = row && row.values && typeof row.values === \"object\" ? row.values : {};\nconst metadata = values.rolling_memory_metadata && typeof values.rolling_memory_metadata === \"object\"\n  ? values.rolling_memory_metadata\n  : {};\nconst sessionDetails = values.session_details && typeof values.session_details === \"object\"\n  ? values.session_details\n  : {};\nconst summaryText = typeof values.current_conversation_summary === \"string\"\n  ? values.current_conversation_summary\n  : \"\";\nconst updatedAt = values.updated_at || (row && (row.updatedAt || row.updated_at)) || null;\nconst sessionEnd = sessionDetails.session_ended_at || sessionDetails.sessionEndedAt || updatedAt || null;\n\ncontext.tableResult = tableResult || {};\ncontext.latestSummary = {\n  id: (row && (row.id || row._id)) || values.id || null,\n  userId: values.user_id || null,\n  projectId: values.project_id || null,\n  tenantId: values.tenant_id || null,\n  currentConversationSummary: summaryText,\n  rollingMemoryMetadata: metadata,\n  sessionDetails: sessionDetails,\n  createdAt: values.created_at || (row && (row.createdAt || row.created_at)) || null,\n  updatedAt: updatedAt\n};\ncontext.summary_text = summaryText;\ncontext.summary_json = metadata;\ncontext.session_details = sessionDetails;\ncontext.session_end = sessionEnd || '';",
+          "timeout": 10
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "xy-edge__start-nodeon_success-291764c3-a679-4c27-b8d3-6fcf6d821a4c",
+        "source": "start-node",
+        "sourceHandle": "on_success",
+        "target": "291764c3-a679-4c27-b8d3-6fcf6d821a4c"
+      },
+      {
+        "id": "xy-edge__291764c3-a679-4c27-b8d3-6fcf6d821a4con_success-parse-latest-summary-node",
+        "source": "291764c3-a679-4c27-b8d3-6fcf6d821a4c",
+        "sourceHandle": "on_success",
+        "target": "parse-latest-summary-node"
+      },
+      {
+        "id": "xy-edge__parse-latest-summary-nodeon_success-b477b652-dd69-4e83-a595-a619ccd7b92c",
+        "source": "parse-latest-summary-node",
+        "sourceHandle": "on_success",
+        "target": "b477b652-dd69-4e83-a595-a619ccd7b92c"
+      }
+    ],
+    "steps": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "type": "string",
+          "enum": [
+            "get",
+            "query",
+            "count",
+            "insert",
+            "update",
+            "upsert",
+            "delete",
+            "bulkInsert",
+            "bulkUpsert"
+          ]
+        },
+        "values": {
+          "type": "object"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "limit": {
+          "type": "number"
+        },
+        "sort": {
+          "type": "object"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "rowId": {
+          "type": "string"
+        },
+        "uniqueKey": {
+          "type": "object"
+        },
+        "rowVersion": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "additionalProperties": true
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "output": {
+          "type": "string"
+        },
+        "latestSummary": {
+          "type": "object"
+        },
+        "summary_text": {
+          "type": "string"
+        },
+        "summary_json": {
+          "type": "object"
+        },
+        "session_details": {
+          "type": "object"
+        },
+        "session_end": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "entryAgent": null,
+    "slaMinutes": null,
+    "escalationRules": [],
+    "notificationRules": []
+  }
+}

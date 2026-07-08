@@ -1,0 +1,9 @@
+TOOLS:
+  contry_wise_data_tool() -> object
+    description: "desc"
+    type: table
+    table: country_wise_afgblue_details
+    scope: project
+    schema_version: 2
+    table_schema_versions: country_wise_afgblue_details=2
+    operations: get, query, count, insert, update, upsert, delete, bulkInsert, bulkUpsert

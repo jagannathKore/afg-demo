@@ -1,0 +1,13 @@
+{
+  "name": "table_access_workflow",
+  "type": "cx_automation",
+  "description": null,
+  "entryAgent": null,
+  "metadata": null,
+  "slaMinutes": null,
+  "escalationRules": [],
+  "notificationRules": [],
+  "slug": "table-access-workflow",
+  "tags": [],
+  "_exportedId": "019f2266-61c0-76e8-8d91-b4cb2d559f71"
+}

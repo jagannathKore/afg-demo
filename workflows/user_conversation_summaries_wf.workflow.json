@@ -1,0 +1,13 @@
+{
+  "name": "user_conversation_summaries_wf",
+  "type": "cx_automation",
+  "description": "API wrapper for inserting and reading user conversation summaries by user_id, project_id, and tenant_id.",
+  "entryAgent": null,
+  "metadata": null,
+  "slaMinutes": null,
+  "escalationRules": [],
+  "notificationRules": [],
+  "slug": "user-conversation-summaries-wf",
+  "tags": [],
+  "_exportedId": "019f3b65-7436-72d4-a2f1-258061239625"
+}

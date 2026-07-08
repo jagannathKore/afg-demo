@@ -1,0 +1,75 @@
+{
+  "version": "draft",
+  "state": "active",
+  "environment": null,
+  "source_hash": "43d996d49da765eace11c8da880dc6d0a9927276785abb9f850d68c940a833bd",
+  "changelog": null,
+  "triggers": [
+    {
+      "_exportedId": "019f2266-61c6-7b7c-aa1d-840af26e8d13",
+      "triggerName": "webhook",
+      "type": "webhook",
+      "config": {},
+      "environment": null
+    }
+  ],
+  "published_at": null,
+  "definition": {
+    "nodes": [
+      {
+        "id": "start-node",
+        "nodeType": "start",
+        "name": "Start",
+        "position": {
+          "x": 52.499999999999986,
+          "y": -9.166666666666675
+        },
+        "config": {
+          "inputVariables": [
+            {
+              "name": "body",
+              "type": "json",
+              "required": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "61c0fc7a-7b70-4c5a-85bd-b0d7dcef610e",
+        "nodeType": "tool",
+        "name": "Tool0001",
+        "position": {
+          "x": 248.33333333333337,
+          "y": 12.499994913736977
+        },
+        "config": {
+          "toolId": "019f2263-ca09-7423-99e0-82c87c845f99",
+          "toolName": "country_wise_afgblue_details",
+          "toolType": null,
+          "params": {},
+          "executionMode": "sync"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "xy-edge__start-nodeon_success-61c0fc7a-7b70-4c5a-85bd-b0d7dcef610e",
+        "source": "start-node",
+        "sourceHandle": "on_success",
+        "target": "61c0fc7a-7b70-4c5a-85bd-b0d7dcef610e"
+      }
+    ],
+    "steps": [],
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "body": {}
+      }
+    },
+    "outputSchema": null,
+    "entryAgent": null,
+    "slaMinutes": null,
+    "escalationRules": [],
+    "notificationRules": []
+  }
+}

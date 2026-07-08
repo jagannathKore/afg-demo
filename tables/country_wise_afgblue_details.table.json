@@ -1,0 +1,58 @@
+{
+  "name": "country_wise_afgblue_details",
+  "displayName": "country_wise_afgblue_details",
+  "description": "this table stores the information of the offerings,categories that are related to afg blue",
+  "scope": "project",
+  "kind": "table",
+  "schemaVersion": 2,
+  "columns": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "default": {
+        "expr": "uuid()"
+      },
+      "indexed": true,
+      "unique": true,
+      "sensitive": false,
+      "order": 0
+    },
+    {
+      "name": "enabled_services",
+      "type": "json",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 1
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "required": false,
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 2
+    },
+    {
+      "name": "product_categories",
+      "type": "json",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 3
+    },
+    {
+      "name": "automobile_categories",
+      "type": "json",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 4
+    }
+  ]
+}

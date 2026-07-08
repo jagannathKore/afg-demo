@@ -1,0 +1,119 @@
+{
+  "version": "draft",
+  "state": "active",
+  "environment": null,
+  "source_hash": "cb4d306da15256b0df24e02eb6dff4cafeab25b47441329e77a2c1224804eedf",
+  "changelog": null,
+  "triggers": [
+    {
+      "_exportedId": "74a2c7ed-f770-42cf-9f44-9f2c2bb35b44",
+      "triggerName": "webhook",
+      "type": "webhook",
+      "config": {},
+      "environment": null
+    }
+  ],
+  "published_at": null,
+  "definition": {
+    "nodes": [
+      {
+        "id": "start-node",
+        "nodeType": "start",
+        "name": "Start",
+        "position": {
+          "x": 100,
+          "y": 100
+        },
+        "config": {
+          "inputVariables": []
+        }
+      },
+      {
+        "id": "end-node",
+        "nodeType": "end",
+        "name": "End",
+        "position": {
+          "x": 666.5771812080537,
+          "y": 49.02684563758389
+        },
+        "config": {
+          "output": "{{steps.table-op.output}}",
+          "outputMapping": {
+            "output": {
+              "expression": "{{context.steps.Tool0001.output}}",
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "c6912b69-4303-4b4f-b26c-c3b884a56075",
+        "nodeType": "tool",
+        "name": "Tool0001",
+        "position": {
+          "x": 119.93489583333334,
+          "y": -62.08333841959634
+        },
+        "config": {
+          "toolId": "019f36c5-59d4-7875-8143-fe6d3d3d9f7a",
+          "toolName": "table_tool",
+          "toolType": "table",
+          "params": {
+            "op": "{{trigger.payload.op}}",
+            "filters": "{{trigger.payload.filters}}",
+            "data": "{{trigger.payload.data}}",
+            "limit": "{{trigger.payload.limit}}",
+            "offset": "{{trigger.payload.offset}}"
+          },
+          "executionMode": "sync"
+        }
+      },
+      {
+        "id": "0195def1-054f-4868-9f81-caeabf83a6a0",
+        "nodeType": "function",
+        "name": "Function0001",
+        "position": {
+          "x": 404.79865771812075,
+          "y": -119.48798428392516
+        },
+        "config": {
+          "code": "const operation = trigger.payload.op;\nconst output = context.steps.Tool0001.output\nif(operation=='query'){\n\n}"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "xy-edge__start-nodeon_success-c6912b69-4303-4b4f-b26c-c3b884a56075",
+        "source": "start-node",
+        "sourceHandle": "on_success",
+        "target": "c6912b69-4303-4b4f-b26c-c3b884a56075"
+      },
+      {
+        "id": "xy-edge__c6912b69-4303-4b4f-b26c-c3b884a56075on_success-0195def1-054f-4868-9f81-caeabf83a6a0",
+        "source": "c6912b69-4303-4b4f-b26c-c3b884a56075",
+        "sourceHandle": "on_success",
+        "target": "0195def1-054f-4868-9f81-caeabf83a6a0"
+      },
+      {
+        "id": "xy-edge__0195def1-054f-4868-9f81-caeabf83a6a0on_success-end-node",
+        "source": "0195def1-054f-4868-9f81-caeabf83a6a0",
+        "sourceHandle": "on_success",
+        "target": "end-node"
+      }
+    ],
+    "steps": [],
+    "inputSchema": null,
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "output": {
+          "type": "string"
+        }
+      }
+    },
+    "entryAgent": null,
+    "slaMinutes": null,
+    "escalationRules": [],
+    "notificationRules": []
+  }
+}

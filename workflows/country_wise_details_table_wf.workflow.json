@@ -1,0 +1,11 @@
+{
+  "name": "country_wise_details_table_wf",
+  "slug": "country-wise-details-table-wf",
+  "type": "cx_automation",
+  "description": "Universal REST API for country_wise_afgblue_details table operations",
+  "entryAgent": null,
+  "slaMinutes": null,
+  "escalationRules": [],
+  "notificationRules": [],
+  "_exportedId": "b62552d0-439c-4a9a-aac9-e03ddc075ecf"
+}

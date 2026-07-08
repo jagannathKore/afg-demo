@@ -1,0 +1,9 @@
+TOOLS:
+  user_conversation_summaries_tool() -> object
+    description: "A tool for user conversation summary"
+    type: table
+    table: user_conversation_summaries
+    scope: project
+    schema_version: 4
+    table_schema_versions: user_conversation_summaries=4
+    operations: get, query, count, insert, update, upsert, delete, bulkInsert, bulkUpsert

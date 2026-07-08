@@ -1,0 +1,99 @@
+{
+  "name": "user_conversation_summaries",
+  "displayName": "user_conversation_summaries",
+  "scope": "project",
+  "kind": "table",
+  "schemaVersion": 4,
+  "columns": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "default": {
+        "expr": "uuid()"
+      },
+      "indexed": true,
+      "unique": true,
+      "sensitive": false,
+      "order": 0
+    },
+    {
+      "name": "project_id",
+      "type": "string",
+      "required": false,
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 1
+    },
+    {
+      "name": "tenant_id",
+      "type": "string",
+      "required": false,
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 2
+    },
+    {
+      "name": "user_id",
+      "type": "string",
+      "required": false,
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 3
+    },
+    {
+      "name": "current_conversation_summary",
+      "type": "string",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 4
+    },
+    {
+      "name": "rolling_memory_metadata",
+      "type": "json",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 5
+    },
+    {
+      "name": "session_details",
+      "type": "json",
+      "required": false,
+      "indexed": false,
+      "unique": false,
+      "sensitive": false,
+      "order": 6
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "required": false,
+      "default": {
+        "expr": "now()"
+      },
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 7
+    },
+    {
+      "name": "updated_at",
+      "type": "datetime",
+      "required": false,
+      "default": {
+        "expr": "now()"
+      },
+      "indexed": true,
+      "unique": false,
+      "sensitive": false,
+      "order": 8
+    }
+  ]
+}
